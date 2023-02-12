@@ -7,10 +7,11 @@ function onLoad() {
 }
 
 function drawContainer(sideLength, color) {
-    let container = getAndSetContainer(sideLength);    
-    let totalSketchElements = sideLength * sideLength;
+    let container = getAndSetContainer(sideLength);
+    let currentSketchElements = container.childElementCount;    
+    let sketchElementsToCreate = (sideLength * sideLength) - currentSketchElements;
 
-    for (let i = 0; i < totalSketchElements; i++) {
+    for (let i = 0; i < sketchElementsToCreate; i++) {
         let tempSketchElement = createSketchElement(color);        
         tempSketchElement.addEventListener("mouseover", etchBackground);
         tempSketchElement.addEventListener("mousedown", etchBackground);
@@ -52,7 +53,7 @@ function createSketchElement(color = "default") {
 }
 
 function redrawContainer(sideLength) {    
-    removeSketchElements();
+    removeSketchElements(sideLength);
     drawContainer(sideLength);
 }
 
@@ -73,10 +74,18 @@ function resetSketchElements() {
     sketchElements.forEach((sketchElement) => sketchElement.className = "sketch-element");
 }
 
-function removeSketchElements() {
+function removeSketchElements(sideLength) {
     let container = document.querySelector("#container");
     let sketchElements = [...container.querySelectorAll(".sketch-element")];
-    sketchElements.forEach((sketchElement) => container.removeChild(sketchElement));
+    let numberOfSketchElementsToKeep = sideLength * sideLength;
+    
+    if (numberOfSketchElementsToKeep > sketchElements.length) {
+        return;
+    }
+
+    for (let i = sketchElements.length - 1; i > numberOfSketchElementsToKeep - 1; i--) {
+        container.removeChild(sketchElements[i]);
+    }
 }
 
 function updateSketchElementsColor(color) {
