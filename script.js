@@ -2,6 +2,7 @@ window.addEventListener('load', onLoad);
 
 function onLoad() {
     drawContainer(16, "default");
+    setSlider();
 }
 
 function drawContainer(sideLength, color) {
@@ -13,6 +14,15 @@ function drawContainer(sideLength, color) {
         container.appendChild(tempSketchElement);
     }
 };
+
+function setSlider() {
+    let slider = document.querySelector("#slider");
+    let sliderNumber = document.querySelector("#sliderNumber");
+
+    slider.addEventListener("input", () => sliderNumber.value = slider.value);
+    slider.addEventListener("mouseup", () => redrawContainer(slider.value));
+    sliderNumber.addEventListener("input", () => slider.value = sliderNumber.value)
+}
 
 function getAndSetContainer(sideLength = 16) {
     let container = document.querySelector("#container"); 
@@ -29,6 +39,11 @@ function createSketchElement(color = "default") {
     tempElement.addEventListener("mouseover", (ev) => etchBackground(ev, color));
     tempElement.addEventListener("mousedown", (ev) => etchBackground(ev, color));
     return tempElement;
+}
+
+function redrawContainer(sideLength) {    
+    //removeSketchElements();
+    //drawContainer(sideLength);
 }
 
 function etchBackground(ev, color) {
