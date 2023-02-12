@@ -1,0 +1,31 @@
+:root {
+    --repeat-count: 16;
+    --track-size-height: calc(50rem / 16);
+    --track-size-width: calc(50rem / 16);
+}
+
+#heading {
+    text-align: center;
+    margin-bottom: 0rem;
+}
+
+#container {
+    display: grid;
+    margin: auto;
+    grid-template-columns: repeat(var(--repeat-count), var(--track-size-height));
+    grid-template-rows: repeat(var(--repeat-count), var(--track-size-width));
+    border: 1px solid black;
+    height: 50rem;
+    width: 50rem;
+    min-height: 350px;
+    min-width: 350px;
+}
+
+.sketch-element {
+    width: var(--track-size-width);
+    height: var(--track-size-height);
+}
+
+.default {
+    background-color: black;
+}
