@@ -38,7 +38,7 @@ function setButtons() {
 }
 
 function getAndSetContainer(sideLength = 16) {
-    let container = document.querySelector("#container"); 
+    let container = document.querySelector("#sketchArea"); 
     container.style.setProperty("--repeat-count", sideLength);
     container.style.setProperty("--track-size-height", `calc(50rem / ${sideLength})`);
     container.style.setProperty("--track-size-width", `calc(50rem / ${sideLength})`);
@@ -71,13 +71,13 @@ function etchBackground(ev) {
 }
 
 function resetSketchElements() {
-    let container = document.querySelector("#container");
+    let container = document.querySelector("#sketchArea");
     let sketchElements = [...container.querySelectorAll(".sketch-element")];
     sketchElements.forEach((sketchElement) => sketchElement.className = "sketch-element");
 }
 
 function removeSketchElements(sideLength) {
-    let container = document.querySelector("#container");
+    let container = document.querySelector("#sketchArea");
     let sketchElements = [...container.querySelectorAll(".sketch-element")];
     let numberOfSketchElementsToKeep = sideLength * sideLength;
     
@@ -91,7 +91,7 @@ function removeSketchElements(sideLength) {
 }
 
 function updateSketchElementsColor(color) {
-    let container = document.querySelector("#container");
+    let container = document.querySelector("#sketchArea");
     let sketchElements = [...container.querySelectorAll(".sketch-element")];
     sketchElements.forEach((sketchElement) => {
         sketchElement.setAttribute("data-color", color);

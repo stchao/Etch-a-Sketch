@@ -2,29 +2,41 @@
     --repeat-count: 16;
     --track-size-height: calc(50rem / 16);
     --track-size-width: calc(50rem / 16);
+    --default-color: #000000;
 }
 
-#heading {
+#heading, #sliderNumber {
     text-align: center;
-    margin-bottom: 0rem;
 }
 
-#actionsContainer, #slideContainer {
-    text-align: center;
-    margin: 1rem auto;
-    gap: 0.25rem;
-}
-
-#slideContainer {
-    min-width: 350px; 
+#container, #container > div:not(#sketchArea), #slideContainer {
     display: flex;
     align-items: center;   
     justify-content: center;
+    gap: 0.25rem;
+}
+
+#sidebar, #slideContainer {
+    flex-direction: column;
+}
+
+#sliderLabel {
+    margin-top: 1rem;
+}
+
+#sliderNumber {
+    width: 2.5rem;
+}
+
+#slideContainer {
+    width: 1rem;
+    height: 40rem;
 }
   
 /* The slider itself */
 #slider {
-    -webkit-appearance: none;  /* Override default CSS styles */
+    transform: rotate(-270deg);
+    -webkit-appearance: none; /* Override default look */
     appearance: none;
     margin: 0rem;
     width: 40rem; /* Full-width */
@@ -58,13 +70,8 @@
     cursor: pointer; /* Cursor on hover */
 }
 
-#sliderNumber {
-    width: 2.5rem;
-}
-
-#container {
+#sketchArea {
     display: grid;
-    margin: auto;
     grid-template-columns: repeat(var(--repeat-count), var(--track-size-height));
     grid-template-rows: repeat(var(--repeat-count), var(--track-size-width));
     border: 1px solid black;
@@ -80,7 +87,7 @@
 }
 
 .default {
-    background-color: black;
+    background-color: var(--default-color);
 }
 
 .default-erase {

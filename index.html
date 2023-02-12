@@ -10,15 +10,18 @@
     </head>
     <body>
         <h1 id="heading">Etch-a-Sketch</h1>
-        <div id="actionsContainer">
-            <button id="clearButton">Clear</button>
-            <button id="eraseButton">Erase</button>
+        <div id="container">
+            <div id="sidebar">
+                <input id="colorPickWheel" type="color" value="#000000" />
+                <button id="clearButton">Clear</button>
+                <button id="eraseButton">Erase</button>
+                <label id="sliderLabel" for="slider">Per Side: </label>
+                <input id="sliderNumber" type="number" min="1" max="100" value="16" />
+                <div id="slideContainer">                    
+                    <input id="slider" class="slider" type="range" min="1" max="100" step="1" value="16" />                    
+                </div>
+            </div>            
+            <div id="sketchArea"></div>
         </div>
-        <div id="slideContainer">
-            <label id="sliderLabel" for="slider">Side Length: </label>
-            <input id="slider" class="slider" type="range" min="1" max="100" step="1" value="16" />
-            <input id="sliderNumber" type="number" min="1" max="100" value="16" />
-        </div>
-        <div id="container"></div>
     </body>
 </html>
