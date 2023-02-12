@@ -11,7 +11,9 @@ function drawContainer(sideLength, color) {
     let totalSketchElements = sideLength * sideLength;
 
     for (let i = 0; i < totalSketchElements; i++) {
-        let tempSketchElement = createSketchElement(color);
+        let tempSketchElement = createSketchElement(color);        
+        tempSketchElement.addEventListener("mouseover", etchBackground);
+        tempSketchElement.addEventListener("mousedown", etchBackground);
         container.appendChild(tempSketchElement);
     }
 };
@@ -45,8 +47,7 @@ function getAndSetContainer(sideLength = 16) {
 function createSketchElement(color = "default") {
     let tempElement = document.createElement("div");
     tempElement.classList.add("sketch-element");
-    tempElement.addEventListener("mouseover", (ev) => etchBackground(ev, color));
-    tempElement.addEventListener("mousedown", (ev) => etchBackground(ev, color));
+    tempElement.setAttribute("data-color", color);
     return tempElement;
 }
 
@@ -55,15 +56,15 @@ function redrawContainer(sideLength) {
     //drawContainer(sideLength);
 }
 
-function etchBackground(ev, color) {
-    let isMouseClicked = ev.buttons === 1 || ev.type === "mousedown";    
+function etchBackground(ev) {
+    let isMouseClicked = ev.buttons === 1 || ev.type === "mousedown";
+    let color = ev.target.dataset.color;
     let isSketchElementAlreadyToggled = ev.target.classList.contains(color);
     if (!isMouseClicked || isSketchElementAlreadyToggled) {
         return;
     }
     
-    ev.target.classList.add(color);
-    this.removeEventListener("mousedown", (ev) => etchBackground(ev, color));
+    ev.target.className = `sketch-element ${color}`;
 }
 
 function resetSketchElements() {
@@ -82,10 +83,7 @@ function updateSketchElementsColor(color) {
     let container = document.querySelector("#container");
     let sketchElements = [...container.querySelectorAll(".sketch-element")];
     sketchElements.forEach((sketchElement) => {
-        sketchElement.removeEventListener("mouseover", (ev) => etchBackground(ev, color));
-        sketchElement.addEventListener("mouseover", (ev) => etchBackground(ev, color));
-        sketchElement.removeEventListener("mousedown", (ev) => etchBackground(ev, color));
-        sketchElement.addEventListener("mousedown", (ev) => etchBackground(ev, color));
+        sketchElement.setAttribute("data-color", color);
     });
 }
 
