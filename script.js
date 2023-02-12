@@ -26,6 +26,7 @@ function setSlider() {
     slider.addEventListener("input", () => sliderNumber.value = slider.value);
     slider.addEventListener("mouseup", () => redrawContainer(slider.value));
     sliderNumber.addEventListener("input", () => slider.value = sliderNumber.value)
+    sliderNumber.addEventListener("change", () => redrawContainer(sliderNumber.value))
 }
 
 function setButtons() {
@@ -52,8 +53,9 @@ function createSketchElement(color = "default") {
     return tempElement;
 }
 
-function redrawContainer(sideLength) {    
+function redrawContainer(sideLength) {
     removeSketchElements(sideLength);
+    resetSketchElements();
     drawContainer(sideLength);
 }
 
