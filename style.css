@@ -9,7 +9,7 @@
     margin-bottom: 0rem;
 }
 
-#slideContainer {
+#actionsContainer, #slideContainer {
     text-align: center;
     margin: 1rem auto;
     gap: 0.25rem;
@@ -82,3 +82,8 @@
 .default {
     background-color: black;
 }
+
+.default-erase {
+    background-color: white;
+}
+  
