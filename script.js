@@ -52,8 +52,8 @@ function createSketchElement(color = "default") {
 }
 
 function redrawContainer(sideLength) {    
-    //removeSketchElements();
-    //drawContainer(sideLength);
+    removeSketchElements();
+    drawContainer(sideLength);
 }
 
 function etchBackground(ev) {
