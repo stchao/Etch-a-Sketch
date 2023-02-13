@@ -2,6 +2,7 @@ window.addEventListener('load', onLoad);
 
 function onLoad() {
     drawContainer(16, "default");
+    setColorWheel();
     setSlider();
     setButtons();
 }
@@ -18,6 +19,32 @@ function drawContainer(sideLength, color) {
         container.appendChild(tempSketchElement);
     }
 };
+
+function setColorWheel() {
+    let colorWheel = document.querySelector("#colorWheel");
+    colorWheel.addEventListener("click", (e) => {
+        Coloris.setInstance('#colorWheel', {
+            theme: 'pill',
+            formatToggle: true,
+            closeButton: true,
+            clearButton: true,
+            swatches: [
+                '#067bc2',
+                '#84bcda',
+                '#80e377',
+                '#ecc30b',
+                '#f37748',
+                '#d56062'
+            ],
+            onChange: updateColor
+        });
+    });
+}
+
+function updateColor(color) {
+    let container = document.querySelector("#sketchArea"); 
+    container.style.setProperty("--default-color", color);
+}
 
 function setSlider() {
     let slider = document.querySelector("#slider");

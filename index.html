@@ -6,15 +6,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Etch-a-Sketch</title>
         <link rel="stylesheet" href="style.css">
-        <script src="script.js" defer></script>        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>        
+        <script type="text/javascript" src="script.js" defer></script>    
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js" defer></script>    
     </head>
     <body>
         <h1 id="heading">Etch-a-Sketch</h1>
         <div id="container">
             <div id="sidebar">
-                <input id="colorPickWheel" type="color" value="#000000" />
-                <button id="clearButton">Clear</button>
-                <button id="eraseButton">Erase</button>
+                <input id="colorWheel" type="text" data-coloris value="#000000" />
+                <div id="actions">
+                    <button id="clearButton">C</button>
+                    <button id="eraseButton">E</button>
+                </div>                
                 <label id="sliderLabel" for="slider">Per Side: </label>
                 <input id="sliderNumber" type="number" min="1" max="100" value="16" />
                 <div id="slideContainer">                    
@@ -23,5 +27,7 @@
             </div>            
             <div id="sketchArea"></div>
         </div>
+        
     </body>
+    
 </html>
