@@ -8,7 +8,7 @@ function onLoad() {
     updateSketchElementsColor(defaultColor);
     setColorWheel();
     setSlider();
-    setButtons();
+    setActionButtons();
 }
 
 function drawContainer(sideLength) {
@@ -60,7 +60,7 @@ function setSlider() {
     sliderNumber.addEventListener("change", () => redrawContainer(sliderNumber.value))
 }
 
-function setButtons() {
+function setActionButtons() {
     let clearButton = document.querySelector("#clearButton");
     let eraseButton = document.querySelector("#eraseButton");
 
@@ -123,18 +123,22 @@ function removeSketchElements(sideLength) {
 }
 
 function toggleErase() {
-    let eraseButton = document.querySelector("#eraseButton");
+    let eraseIcon = document.querySelector("#eraseIcon");
+    let pencilIcon = document.querySelector("#pencilIcon");
     let colorWheel = document.querySelector("#colorWheel");
+    let isEraseIconHidden = eraseIcon.classList.contains("display-none");
 
-    if (eraseButton.innerText === "E") {
-        eraseButton.innerText = "D";
+    if (!isEraseIconHidden) {
+        pencilIcon.classList.toggle("display-none");
+        eraseIcon.classList.toggle("display-none");
         colorWheel.setAttribute("data-previousColor", colorWheel.value);
         updateSketchElementsColor(defaultEraseColor);        
         return;
     }
     
-    eraseButton.innerText = "E";
     let color = colorWheel.dataset.previouscolor || defaultColor;
     updateSketchElementsColor(color);
+    pencilIcon.classList.toggle("display-none");
+    eraseIcon.classList.toggle("display-none");
     colorWheel.setAttribute("data-previousColor", "");
 }

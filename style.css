@@ -2,10 +2,16 @@
     --repeat-count: 16;
     --track-size-height: calc(50rem / 16);
     --track-size-width: calc(50rem / 16);
+    --font-color: #6c6c6c;
 }
 
-#heading, #sliderNumber {
+body {
+    background-color: #f9f9f9;
+}
+
+#heading, #sliderNumber, #sliderLabel {
     text-align: center;
+    color: var(--font-color);
 }
 
 #container, #container > div:not(#sketchArea), #slideContainer, #actions {
@@ -13,6 +19,10 @@
     align-items: center;   
     justify-content: center;
     gap: 0.25rem;
+}
+
+#container {
+    gap: 1rem;
 }
 
 #sidebar, #slideContainer {
@@ -25,9 +35,10 @@
 }
 
 .clr-field > button {
+    box-shadow: 0 1px .25rem #a0a0a0;
     width: 100% !important;
     border-radius: 2rem;
-    border: 1px solid black;
+    border: 1px solid var(--font-color);
 }
 
 .clr-field > input {
@@ -42,6 +53,15 @@
 #actions {
     width: 4rem;
     flex-wrap: wrap;
+}
+
+#clearButton, #eraseButton {
+    height: 1.75rem;
+    padding: 1px 4px;
+}
+
+.actions-icons {
+    height: 1.25rem;
 }
 
 #sliderLabel {
@@ -59,13 +79,14 @@
   
 /* The slider itself */
 #slider {
+    border-radius: 1rem;
     transform: rotate(-270deg);
     -webkit-appearance: none; /* Override default look */
     appearance: none;
     margin: 0rem;
     width: 40rem; /* Full-width */
-    height: 1rem; /* Specified height */
-    background: #d3d3d3; /* Grey background */
+    height: .6rem; /* Specified height */
+    background: var(--font-color); /* Grey background */
     outline: none; /* Remove outline */
     opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
@@ -81,24 +102,27 @@
 #slider::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
+    width: 1.5rem; /* Set a specific slider handle width */
+    height: 1.5rem; /* Slider handle height */
+    border-radius: 0.75rem;
+    background: #d3d3d3; /* Gray background */
     cursor: pointer; /* Cursor on hover */
 }
 
 #slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
+    width: 1.5rem; /* Set a specific slider handle width */
+    height: 1.5rem; /* Slider handle height */
+    border-radius: 0.75rem;
+    background: #d3d3d3; /* Gray background */
     cursor: pointer; /* Cursor on hover */
 }
 
 #sketchArea {
     display: grid;
+    background-color: white;
+    box-shadow: 0 1px 1rem #a0a0a0;
     grid-template-columns: repeat(var(--repeat-count), var(--track-size-height));
     grid-template-rows: repeat(var(--repeat-count), var(--track-size-width));
-    border: 1px solid black;
     height: 50rem;
     width: 50rem;
     min-height: 350px;
@@ -108,5 +132,9 @@
 .sketch-element {
     width: var(--track-size-width);
     height: var(--track-size-height);
+}
+
+.display-none {
+    display: none;
 }
   
