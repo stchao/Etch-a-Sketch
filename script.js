@@ -1,19 +1,23 @@
+const defaultColor = "#000000";
+const defaultEraseColor = "#ffffff";
+
 window.addEventListener('load', onLoad);
 
 function onLoad() {
-    drawContainer(16, "default");
+    drawContainer(16);
+    updateSketchElementsColor(defaultColor);
     setColorWheel();
     setSlider();
     setButtons();
 }
 
-function drawContainer(sideLength, color) {
+function drawContainer(sideLength) {
     let container = getAndSetContainer(sideLength);
     let currentSketchElements = container.childElementCount;    
     let sketchElementsToCreate = (sideLength * sideLength) - currentSketchElements;
 
     for (let i = 0; i < sketchElementsToCreate; i++) {
-        let tempSketchElement = createSketchElement(color);        
+        let tempSketchElement = createSketchElement();        
         tempSketchElement.addEventListener("mouseover", etchBackground);
         tempSketchElement.addEventListener("mousedown", etchBackground);
         container.appendChild(tempSketchElement);
@@ -36,14 +40,14 @@ function setColorWheel() {
                 '#f37748',
                 '#d56062'
             ],
-            onChange: updateColor
+            onChange: updateSketchElementsColor
         });
     });
 }
 
-function updateColor(color) {
-    let container = document.querySelector("#sketchArea"); 
-    container.style.setProperty("--default-color", color);
+function updateSketchElementsColor(color) {
+    let colorWheel = document.querySelector("#colorWheel");
+    colorWheel.value = color;
 }
 
 function setSlider() {
@@ -73,10 +77,9 @@ function getAndSetContainer(sideLength = 16) {
     return container;
 }
 
-function createSketchElement(color = "default") {
+function createSketchElement() {
     let tempElement = document.createElement("div");
     tempElement.classList.add("sketch-element");
-    tempElement.setAttribute("data-color", color);
     return tempElement;
 }
 
@@ -88,19 +91,21 @@ function redrawContainer(sideLength) {
 
 function etchBackground(ev) {
     let isMouseClicked = ev.buttons === 1 || ev.type === "mousedown";
-    let color = ev.target.dataset.color;
-    let isSketchElementAlreadyToggled = ev.target.classList.contains(color);
-    if (!isMouseClicked || isSketchElementAlreadyToggled) {
-        return;
-    }
+    let colorWheel = document.querySelector("#colorWheel") ;
+    let color = colorWheel.value;
+    let isSketchElementAlreadyThisColor = ev.target.style.backgroundColor === color;
     
-    ev.target.className = `sketch-element ${color}`;
+    if (!isMouseClicked || isSketchElementAlreadyThisColor) {
+        return;
+    }    
+    
+    ev.target.style.backgroundColor = color;
 }
 
 function resetSketchElements() {
     let container = document.querySelector("#sketchArea");
     let sketchElements = [...container.querySelectorAll(".sketch-element")];
-    sketchElements.forEach((sketchElement) => sketchElement.className = "sketch-element");
+    sketchElements.forEach((sketchElement) => sketchElement.style.backgroundColor = defaultEraseColor);
 }
 
 function removeSketchElements(sideLength) {
@@ -117,23 +122,19 @@ function removeSketchElements(sideLength) {
     }
 }
 
-function updateSketchElementsColor(color) {
-    let container = document.querySelector("#sketchArea");
-    let sketchElements = [...container.querySelectorAll(".sketch-element")];
-    sketchElements.forEach((sketchElement) => {
-        sketchElement.setAttribute("data-color", color);
-    });
-}
-
 function toggleErase() {
     let eraseButton = document.querySelector("#eraseButton");
+    let colorWheel = document.querySelector("#colorWheel");
 
-    if (eraseButton.innerText === "Erase") {
-        eraseButton.innerText = "Draw";
-        updateSketchElementsColor("default-erase");        
+    if (eraseButton.innerText === "E") {
+        eraseButton.innerText = "D";
+        colorWheel.setAttribute("data-previousColor", colorWheel.value);
+        updateSketchElementsColor(defaultEraseColor);        
         return;
     }
-
-    eraseButton.innerText = "Erase";
-    updateSketchElementsColor("default");   
+    
+    eraseButton.innerText = "E";
+    let color = colorWheel.dataset.previouscolor || defaultColor;
+    updateSketchElementsColor(color);
+    colorWheel.setAttribute("data-previousColor", "");
 }

@@ -2,7 +2,6 @@
     --repeat-count: 16;
     --track-size-height: calc(50rem / 16);
     --track-size-width: calc(50rem / 16);
-    --default-color: #000000;
 }
 
 #heading, #sliderNumber {
@@ -28,6 +27,7 @@
 .clr-field > button {
     width: 100% !important;
     border-radius: 2rem;
+    border: 1px solid black;
 }
 
 .clr-field > input {
@@ -108,13 +108,5 @@
 .sketch-element {
     width: var(--track-size-width);
     height: var(--track-size-height);
-}
-
-.default {
-    background-color: var(--default-color);
-}
-
-.default-erase {
-    background-color: white;
 }
   
