@@ -63,9 +63,11 @@ function setSlider() {
 function setActionButtons() {
     let clearButton = document.querySelector("#clearButton");
     let eraseButton = document.querySelector("#eraseButton");
+    let printButton = document.querySelector("#printerButton");
 
     clearButton.addEventListener("click", resetSketchElements);
     eraseButton.addEventListener("click", toggleErase);
+    printButton.addEventListener("click", printSketch);
 }
 
 function getAndSetContainer(sideLength = 16) {
@@ -141,4 +143,45 @@ function toggleErase() {
     pencilIcon.classList.toggle("display-none");
     eraseIcon.classList.toggle("display-none");
     colorWheel.setAttribute("data-previousColor", "");
+}
+
+function printSketch() {
+    let printWindow = window.open('', 'PRINT', 'height=600,width=800');
+    let sketchAreaElement = document.getElementById("sketchArea");
+    let repeatCount = sketchAreaElement.style.getPropertyValue("--repeat-count");
+
+    printWindow.document.write(`<html><head><title>${document.title}</title>`);
+    printWindow.document.write(
+        `<style>
+            :root {
+                --repeat-count: ${repeatCount};
+                --track-size-height: calc(45rem / ${repeatCount});
+                --track-size-width: calc(45rem / ${repeatCount});
+                --font-color: #6c6c6c;
+            }
+            h1 {
+                text-align: center;
+            }
+            #sketchArea {
+                display: grid;
+                background-color: white;
+                box-shadow: 0 1px 1rem #a0a0a0;
+                grid-template-columns: repeat(var(--repeat-count), var(--track-size-height));
+                grid-template-rows: repeat(var(--repeat-count), var(--track-size-width));
+                height: 45rem;
+                width: 45rem;
+                min-height: 350px;
+                min-width: 350px;
+            }
+            .sketch-element {
+                width: var(--track-size-width);
+                height: var(--track-size-height);
+            }           
+        </style></head><body>`);
+    printWindow.document.write(`<h1>${document.title}</h1>`);
+    printWindow.document.write(`<div id="sketchArea">${sketchAreaElement.innerHTML}</div>`);
+    printWindow.document.write('</body></html>');
+
+    printWindow.print();
+    printWindow.close();
 }
