@@ -64,10 +64,12 @@ function setActionButtons() {
     let clearButton = document.querySelector("#clearButton");
     let eraseButton = document.querySelector("#eraseButton");
     let printButton = document.querySelector("#printerButton");
+    let randomButton = document.querySelector("#randomButton");
 
     clearButton.addEventListener("click", resetSketchElements);
     eraseButton.addEventListener("click", toggleErase);
     printButton.addEventListener("click", printSketch);
+    randomButton.addEventListener("click", toggleRandom);
 }
 
 function getAndSetContainer(sideLength = 16) {
@@ -91,16 +93,23 @@ function redrawContainer(sideLength) {
     drawContainer(sideLength);
 }
 
-function etchBackground(ev) {
+function etchBackground(ev) {    
+    let randomButton = document.querySelector("#randomButton");
+    let colorWheel = document.querySelector("#colorWheel");        
     let isMouseClicked = ev.buttons === 1 || ev.type === "mousedown";
-    let colorWheel = document.querySelector("#colorWheel") ;
-    let color = colorWheel.value;
+    let isRandomEnabled = randomButton.classList.contains("toggle-enabled");
+    let color = !isRandomEnabled ? colorWheel.value : getRandomColor();
     let isSketchElementAlreadyThisColor = ev.target.style.backgroundColor === color;
     
     if (!isMouseClicked || isSketchElementAlreadyThisColor) {
         return;
     }    
     
+    if (isRandomEnabled) {
+        colorWheel.value = color;
+        colorWheel.parentElement.style.color = color;
+    }
+
     ev.target.style.backgroundColor = color;
 }
 
@@ -184,4 +193,13 @@ function printSketch() {
 
     printWindow.print();
     printWindow.close();
+}
+
+function toggleRandom() {
+    let randomButton = document.querySelector("#randomButton");
+    randomButton.classList.toggle("toggle-enabled");
+}
+
+function getRandomColor() {
+    return `#${Math.floor(Math.random()*16777215).toString(16)}`;
 }

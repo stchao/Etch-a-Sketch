@@ -55,7 +55,7 @@ body {
     flex-wrap: wrap;
 }
 
-#clearButton, #eraseButton {
+#actions > button {
     height: 1.75rem;
     padding: 1px 4px;
 }
@@ -136,5 +136,9 @@ body {
 
 .display-none {
     display: none;
+}
+
+.toggle-enabled {
+    background-color: var(--font-color);
 }
   
