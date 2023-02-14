@@ -79,7 +79,7 @@ body {
 
 #slideContainer {
     width: 1rem;
-    height: 40rem;
+    height: 37rem;
 }
   
 /* The slider itself */
@@ -89,7 +89,7 @@ body {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
     margin: 0rem;
-    width: 38rem; /* Specified width */
+    width: 37rem; /* Specified width */
     height: .6rem; /* Specified height */
     background: var(--font-color); /* Grey background */
     outline: none; /* Remove outline */

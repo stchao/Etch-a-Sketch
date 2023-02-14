@@ -65,11 +65,13 @@ function setActionButtons() {
     let eraseButton = document.querySelector("#eraseButton");
     let printButton = document.querySelector("#printerButton");
     let randomButton = document.querySelector("#randomButton");
+    let githubButton = document.querySelector("#githubButton");
 
     clearButton.addEventListener("click", resetSketchElements);
     eraseButton.addEventListener("click", toggleErase);
     printButton.addEventListener("click", printSketch);
     randomButton.addEventListener("click", toggleRandom);
+    githubButton.addEventListener("click", navigateToGithub);
 }
 
 function getAndSetContainer(sideLength = 16) {
@@ -201,4 +203,8 @@ function toggleRandom() {
 
 function getRandomColor() {
     return `#${Math.floor(Math.random()*16777215).toString(16)}`;
+}
+
+function navigateToGithub() {
+    window.location.href = "https://github.com/stchao/Etch-a-Sketch";
 }
