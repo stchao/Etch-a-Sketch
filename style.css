@@ -14,6 +14,11 @@ body {
     color: var(--font-color);
 }
 
+#heading {
+    font-size: 3rem;
+    margin: 1rem auto;
+}
+
 #container, #container > div:not(#sketchArea), #slideContainer, #actions {
     display: flex;
     align-items: center;   
@@ -55,7 +60,7 @@ body {
     flex-wrap: wrap;
 }
 
-#clearButton, #eraseButton {
+#actions > button {
     height: 1.75rem;
     padding: 1px 4px;
 }
@@ -84,7 +89,7 @@ body {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
     margin: 0rem;
-    width: 40rem; /* Full-width */
+    width: 38rem; /* Specified width */
     height: .6rem; /* Specified height */
     background: var(--font-color); /* Grey background */
     outline: none; /* Remove outline */
@@ -134,7 +139,7 @@ body {
     height: var(--track-size-height);
 }
 
-.display-none {
-    display: none;
+.toggle-enabled {
+    background-color: var(--font-color);
 }
   

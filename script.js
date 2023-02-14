@@ -64,10 +64,12 @@ function setActionButtons() {
     let clearButton = document.querySelector("#clearButton");
     let eraseButton = document.querySelector("#eraseButton");
     let printButton = document.querySelector("#printerButton");
+    let randomButton = document.querySelector("#randomButton");
 
     clearButton.addEventListener("click", resetSketchElements);
     eraseButton.addEventListener("click", toggleErase);
     printButton.addEventListener("click", printSketch);
+    randomButton.addEventListener("click", toggleRandom);
 }
 
 function getAndSetContainer(sideLength = 16) {
@@ -91,16 +93,25 @@ function redrawContainer(sideLength) {
     drawContainer(sideLength);
 }
 
-function etchBackground(ev) {
+function etchBackground(ev) {    
+    let randomButton = document.querySelector("#randomButton");
+    let colorWheel = document.querySelector("#colorWheel");
+    let eraseButton = document.querySelector("#eraseButton");    
     let isMouseClicked = ev.buttons === 1 || ev.type === "mousedown";
-    let colorWheel = document.querySelector("#colorWheel") ;
-    let color = colorWheel.value;
+    let isRandomEnabled = randomButton.classList.contains("toggle-enabled");
+    let isEraseEnabled = eraseButton.classList.contains("toggle-enabled");  
+    let color = !isRandomEnabled || isEraseEnabled ? colorWheel.value : getRandomColor();
     let isSketchElementAlreadyThisColor = ev.target.style.backgroundColor === color;
     
     if (!isMouseClicked || isSketchElementAlreadyThisColor) {
         return;
     }    
     
+    if (isRandomEnabled) {
+        colorWheel.value = color;
+        colorWheel.parentElement.style.color = color;
+    }
+
     ev.target.style.backgroundColor = color;
 }
 
@@ -125,24 +136,21 @@ function removeSketchElements(sideLength) {
 }
 
 function toggleErase() {
-    let eraseIcon = document.querySelector("#eraseIcon");
-    let pencilIcon = document.querySelector("#pencilIcon");
+    let eraseButton = document.querySelector("#eraseButton");
     let colorWheel = document.querySelector("#colorWheel");
-    let isEraseIconHidden = eraseIcon.classList.contains("display-none");
+    let isEraseEnabled = eraseButton.classList.contains("toggle-enabled");
 
-    if (!isEraseIconHidden) {
-        pencilIcon.classList.toggle("display-none");
-        eraseIcon.classList.toggle("display-none");
+    eraseButton.classList.toggle("toggle-enabled");
+
+    if (!isEraseEnabled) {        
         colorWheel.setAttribute("data-previousColor", colorWheel.value);
         updateSketchElementsColor(defaultEraseColor);        
         return;
     }
     
     let color = colorWheel.dataset.previouscolor || defaultColor;
-    updateSketchElementsColor(color);
-    pencilIcon.classList.toggle("display-none");
-    eraseIcon.classList.toggle("display-none");
     colorWheel.setAttribute("data-previousColor", "");
+    updateSketchElementsColor(color);    
 }
 
 function printSketch() {
@@ -184,4 +192,13 @@ function printSketch() {
 
     printWindow.print();
     printWindow.close();
+}
+
+function toggleRandom() {
+    let randomButton = document.querySelector("#randomButton");
+    randomButton.classList.toggle("toggle-enabled");
+}
+
+function getRandomColor() {
+    return `#${Math.floor(Math.random()*16777215).toString(16)}`;
 }
